@@ -2,64 +2,69 @@ sap.ui.define([
 	"sap/ui/core/mvc/Controller",
 	"sap/ui/model/json/JSONModel",
 	"sap/ui/model/Filter",
-	"sap/ui/model/FilterOperator"
-], function(Controller, JSONModel, Filter, FilterOperator) {
+	"sap/ui/model/FilterOperator",
+	"sap/m/MessageBox"
+], function(Controller, JSONModel, Filter, FilterOperator, MessageBox) {
 	"use strict";
 
 	return Controller.extend("GfiRestau.controller.view1", {
 		onInit: function() {
-			var oEmpData = {
-				"emp": [{
-					"empid": "111111",
-					"empname": "John Walter",
-					"exp": "12",
-					"age": "40",
-					"city": "Tokyo",
-					"country": "Japan",
-					"designation": "Delivery Manager",
-					"cadre": "Band 5",
-					"projects": [{
-						"projectid": "PGIMPL",
-						"projectname": "P &amp; G SAP Implementation"
-					}, {
-						"projectid": "ARMSUPPORT",
-						"projectname": "Aramco Support"
+			var oMenuData = {
+				"menu": [{
+					"id": "1",
+					"nom": "Plats français",
+					"description": "Spécialités françaises ",
+					"date": "24/06/2020",
+					"plats": [{
+						"id": "1",
+						"nom": "Tartiflette",
+						"description": "Composée de pommes de terre, de lardons, de reblochon et d’oignon et généralement accompagnée d’une bonne salade verte, la tartiflette est une spécialité culinaire française originaire de Savoie. Un repas simple, mais délicieux qui s’apprécie à tout moment de l’année, en hiver – le soir après une bonne journée de ski – comme en été."
+					}, 
+					{
+						"id": "2",
+						"nom": "Coq au Vin",
+						"description": "Le coq au vin est un plat traditionnel de la cuisine française. Pour préparer ce plat, vous avez besoin d’un coq découpé en morceaux cuisiné dans du bon vin (généralement rouge, mais le riesling peut également faire l’affaire) et accompagné d’oignons, de carottes, d’un bouquet garni et de champignons. Bon appétit."
+					},
+					{
+						"id": "3",
+						"nom": "Quiche lorraine",
+						"description": "La quiche est – avec les bergamotes, les madeleines et la mirabelle – l’une des plus délicieuses spécialités culinaires lorraines. Recouverte de lardons et de migaine, cette tarte salée se consomme idéalement en entrée. Cette spécialité française traditionnelle se déguste avec une bonne salade verte ou des endives."
 					}]
-				}, {
-					"empid": "222222",
-					"empname": "Rashid Khan",
-					"exp": "3",
-					"age": "24",
-					"city": "Tokyo",
-					"country": "Japan",
-					"cadre": "Band 1",
-					"designation": "Software Engineer",
-					"projects": [{
-						"projectid": "AIRBNB",
-						"projectname": "AIRBNB Implementation"
-					}, {
-						"projectid": "TATA",
-						"projectname": "Tata Power Support"
+				}, 
+				{
+					"id": "2",
+					"nom": "Plats marocains",
+					"description": "Spécialités marocaines",
+					"date": "25/06/2020",
+					"plats": [{
+						"id": "4",
+						"nom": "Couscous",
+						"description": "Probablement le plat le plus populaire avec le tajine, c’est en tout cas celui qui vient en premier à l’esprit lorsque l’on évoque la gastronomie marocaine. Traditionnellement servi le vendredi midi, après la prière de dhuhr, on le déguste aujourd’hui indifféremment tous les jours de la semaine. D’origine berbère, la version traditionnelle se compose de bœuf et de mouton, parfois de poulet, d’une multitude de légumes et légumineuses (courgettes, navets, fèves, lentilles, pois) et bien sûr, de semoule de blé. Les marocains le dégustent à même le plat, ou le servent dans des assiettes individuelles."
+					}, 
+					{
+						"id": "5",
+						"nom": "Tajine",
+						"description": "Le tajine est un plat typique marocain dont les origines sont également berbères. On dit d’ailleurs que les meilleurs tajines se savourent aujourd’hui encore en territoire berbère ! Il s’agit d’une sorte de ragoût cuit à l’étouffée dans un plat en terre surmonté d’un couvercle conique. Il existe un nombre infini de recettes de tajines, toutes plus savoureuses les unes que les autres: Tajine de poulet aux légumes, au safran ou aux pruneaux, tajines de légumes aux pois chiches, tajines de sardines, tajines de moutons aux oignons et pois chiches etc…"
 					}]
-				}, {
-					"empid": "333333",
-					"empname": "Supriya Singh",
-					"exp": "5",
-					"age": "34",
-					"city": "Tokyo",
-					"country": "Japan",
-					"cadre": "Band 3",
-					"designation": "Sr. Software Engineer",
-					"projects": [{
-						"projectid": "INDIAGOV",
-						"projectname": "INDIA GOV SAP Implementation"
-					}, {
-						"projectid": "ARMSUPPORT",
-						"projectname": "Aramco Support"
+				},
+				{
+					"id": "3",
+					"nom": "Plats mixte",
+					"description": "Spécialités françaises/marocaines",
+					"date": "26/06/2020",
+					"plats": [{
+						"id": "1",
+						"nom": "Tartiflette",
+						"description": "Composée de pommes de terre, de lardons, de reblochon et d’oignon et généralement accompagnée d’une bonne salade verte, la tartiflette est une spécialité culinaire française originaire de Savoie. Un repas simple, mais délicieux qui s’apprécie à tout moment de l’année, en hiver – le soir après une bonne journée de ski – comme en été."
+					}, 
+					{
+						"id": "4",
+						"nom": "Couscous",
+						"description": "Probablement le plat le plus populaire avec le tajine, c’est en tout cas celui qui vient en premier à l’esprit lorsque l’on évoque la gastronomie marocaine. Traditionnellement servi le vendredi midi, après la prière de dhuhr, on le déguste aujourd’hui indifféremment tous les jours de la semaine. D’origine berbère, la version traditionnelle se compose de bœuf et de mouton, parfois de poulet, d’une multitude de légumes et légumineuses (courgettes, navets, fèves, lentilles, pois) et bien sûr, de semoule de blé. Les marocains le dégustent à même le plat, ou le servent dans des assiettes individuelles."
 					}]
 				}]
 			};
-			var oModel = new JSONModel(oEmpData);
+			var oModel = new JSONModel(oMenuData);
 			this.getView().setModel(oModel);
 		},
 		
@@ -70,23 +75,32 @@ sap.ui.define([
 			this.getView().byId("projectlistid").bindElement(path);		
 		},
 		
-		onSearch: function(oEvent) {
+		
+		onDetailObjectItemPress: function(oEvent) {
+			MessageBox.information(oEvent.getSource().getDescription());
+		},
+		
+		onDetailAddPress: function(oEvent) {
+			sap.ui.core.UIComponent.getRouterFor(this).navTo("view3");
+		},
+		
+		onMasterAddPress: function(oEvent) {
+			sap.ui.core.UIComponent.getRouterFor(this).navTo("view2");
+		},
+		
+		onDatePickerChange: function(oEvent) {
 			// create a blank filter array
 			var aFilter = [];
 			// get the string which was searched by the user
-			var sQuery = oEvent.getParameter("query");
+			var sQuery = oEvent.getSource().getValue();
 			// create new filter object using the searched string
-			var oFilter = new sap.ui.model.Filter("empname", FilterOperator.Contains, sQuery);
+			var oFilter = new sap.ui.model.Filter("date", FilterOperator.Contains, sQuery);
 			// push the newly created filter object in the blank filter array created above.
 			aFilter.push(oFilter);
 			// get the binding of items aggregation of the List
 			var oBinding = this.getView().byId("emplist").getBinding("items");
 			// apply filter on the obtained binding
 			oBinding.filter(aFilter);
-		},
-		
-		onClick: function() {
-			sap.ui.core.UIComponent.getRouterFor(this).navTo("view2");
 		}
 	});
 

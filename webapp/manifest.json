@@ -79,6 +79,13 @@
 					"view": "view2",
 					"targetAggregation": "pages",
 					"controlId": "app"
+				},
+				{
+					"pattern": "View3",
+					"name": "view3",
+					"view": "view3",
+					"targetAggregation": "pages",
+					"controlId": "app"
 				}]
 		},
 		"models": {

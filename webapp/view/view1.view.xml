@@ -2,52 +2,38 @@
 	xmlns:html="http://www.w3.org/1999/xhtml">
 	<App>
 		<pages>
-			<Page title="View1">
+			<Page title="Gfi restaurant">
 				<content>
-					<Button text="Go to view 2" press="onClick"></Button>
-					
-					<SplitApp id="splitappid" masterButtonText="Master" masterNavigate="" afterMasterNavigate="" masterButton="" detailNavigate="">
+					<SplitApp id="splitappid" masterButtonText="Menus">
 						<masterPages>
-							<Page id="masterpageid" title="Employee Basic Info" titleLevel="Auto" showNavButton="true" showHeader="true" showSubHeader="true"
-								navButtonText="" navButtonTooltip="" enableScrolling="true" icon="" navButtonTap="" navButtonPress="">
+							<Page id="masterpageid" title="Liste des menus" titleLevel="Auto" showHeader="true" showSubHeader="true" enableScrolling="true">
 								<content>
-									<List id="emplist" items="{/emp}" headerText="Employee Data" headerDesign="Standard" footerText="End of the List" noDataText="No Employees" showNoData="true">
-										<items>
-											<ObjectListItem type="Navigation" title="{empname}" number="{age}" numberUnit="years" intro="{empid}" press="onObjectItemPress">
-												<attributes>
-													<ObjectAttribute title="" text="{cadre}"></ObjectAttribute>
-												</attributes>
-												<firstStatus>
-													<ObjectStatus title="{exp}" text="{designation}"></ObjectStatus>
-												</firstStatus>
-												<secondStatus>
-													<ObjectStatus title="{city}" text="{country}"></ObjectStatus>
-												</secondStatus>
-											</ObjectListItem>
-										</items>
+									<List id="emplist" items="{/menu}" noDataText="Aucun menu" showNoData="true" mode="Delete" delete="onMasterDelete">
 										<headerToolbar>
 											<Toolbar>
 												<content>
-													<Title text="Employees" title="Search"></Title>
-													<ToolbarSpacer/>
-													<SearchField search="onSearch" width="50%"></SearchField>
+													<DatePicker change="onDatePickerChange"></DatePicker>
 												</content>
 											</Toolbar>
 										</headerToolbar>
+										<items>
+											<StandardListItem type="Navigation" title="{date}" description="{nom}" press="onObjectItemPress"></StandardListItem>
+										</items>
 									</List>
+									<Button text="Ajouter un menu" width="100%" press="onMasterAddPress"></Button>
 								</content>
 							</Page>
 						</masterPages>
 						<detailPages>
-							<Page id="detailpageid" title="Employee Project Information" titleLevel="Auto" showNavButton="true" showHeader="true" showSubHeader="true"
-									navButtonText="" navButtonTooltip="" enableScrolling="true" icon="" navButtonTap="" navButtonPress="">
-									<content>
-										<List id="projectlistid" items="{projects}">
-											<items>
-												<StandardListItem title="{projectid}" description="{projectname}"></StandardListItem>
-											</items>
-										</List>
-									</content>
+							<Page id="detailpageid" title="Liste des plats" titleLevel="Auto" showHeader="true" showSubHeader="true" enableScrolling="true">
+								<content>
+									<List id="projectlistid" items="{plats}" mode="Delete" delete="onDetailDelete">
+										<items>
+											<StandardListItem type="Navigation" title="{nom}" description="{description}"  press="onDetailObjectItemPress"></StandardListItem>
+										</items>
+									</List>
+									<Button text="Ajouter un plat" width="100%" press="onDetailAddPress"></Button>
+								</content>
 							</Page>
 						</detailPages>
 					</SplitApp>
