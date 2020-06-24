@@ -5,6 +5,52 @@
 			<Page title="View1">
 				<content>
 					<Button text="Go to view 2" press="onClick"></Button>
+					
+					<SplitApp id="splitappid" masterButtonText="Master" masterNavigate="" afterMasterNavigate="" masterButton="" detailNavigate="">
+						<masterPages>
+							<Page id="masterpageid" title="Employee Basic Info" titleLevel="Auto" showNavButton="true" showHeader="true" showSubHeader="true"
+								navButtonText="" navButtonTooltip="" enableScrolling="true" icon="" navButtonTap="" navButtonPress="">
+								<content>
+									<List id="emplist" items="{/emp}" headerText="Employee Data" headerDesign="Standard" footerText="End of the List" noDataText="No Employees" showNoData="true">
+										<items>
+											<ObjectListItem type="Navigation" title="{empname}" number="{age}" numberUnit="years" intro="{empid}" press="onObjectItemPress">
+												<attributes>
+													<ObjectAttribute title="" text="{cadre}"></ObjectAttribute>
+												</attributes>
+												<firstStatus>
+													<ObjectStatus title="{exp}" text="{designation}"></ObjectStatus>
+												</firstStatus>
+												<secondStatus>
+													<ObjectStatus title="{city}" text="{country}"></ObjectStatus>
+												</secondStatus>
+											</ObjectListItem>
+										</items>
+										<headerToolbar>
+											<Toolbar>
+												<content>
+													<Title text="Employees" title="Search"></Title>
+													<ToolbarSpacer/>
+													<SearchField search="onSearch" width="50%"></SearchField>
+												</content>
+											</Toolbar>
+										</headerToolbar>
+									</List>
+								</content>
+							</Page>
+						</masterPages>
+						<detailPages>
+							<Page id="detailpageid" title="Employee Project Information" titleLevel="Auto" showNavButton="true" showHeader="true" showSubHeader="true"
+									navButtonText="" navButtonTooltip="" enableScrolling="true" icon="" navButtonTap="" navButtonPress="">
+									<content>
+										<List id="projectlistid" items="{projects}">
+											<items>
+												<StandardListItem title="{projectid}" description="{projectname}"></StandardListItem>
+											</items>
+										</List>
+									</content>
+							</Page>
+						</detailPages>
+					</SplitApp>
 				</content>
 			</Page>
 		</pages>
