@@ -1,0 +1,13 @@
+Description=S4H S/4 Hana on-premise 1809 fully activated.
+Type=HTTP
+TrustAll=true
+Authentication=BasicAuthentication
+User=MBUGNONE
+Password=Chatroky98!
+Name=S4H
+ProxyType=Internet
+URL=http://127.0.0.1:50000
+WebIDEUsage=odata_abap,odata_gen
+WebIDESystem=S4H
+WebIDEEnabled=true
+sap-client=100

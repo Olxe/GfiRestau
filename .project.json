@@ -18,6 +18,11 @@
       "templateId": "ui5template.basicSAPUI5ApplicationComponent",
       "templateVersion": "1.4.0",
       "dateTimeStamp": "Wed, 24 Jun 2020 13:31:55 GMT"
+    },
+    {
+      "templateId": "servicecatalog.connectivityComponent",
+      "templateVersion": "0.0.0",
+      "dateTimeStamp": "Thu, 23 Jul 2020 20:39:50 GMT"
     }
   ],
   "translation": {
@@ -45,5 +50,12 @@
     "targetFolder": "dist",
     "excludedFolders": [],
     "excludedFiles": []
+  },
+  "mockpreview": {
+    "mockUri": "/S4H/sap/opu/odata/sap/ZMENU_PO_FINAL_SRV",
+    "metadataFilePath": "",
+    "loadJSONFiles": false,
+    "loadCustomRequests": false,
+    "mockRequestsFilePath": ""
   }
 }

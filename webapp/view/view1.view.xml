@@ -8,7 +8,7 @@
 						<masterPages>
 							<Page id="masterpageid" title="Liste des menus" titleLevel="Auto" showHeader="true" showSubHeader="true" enableScrolling="true">
 								<content>
-									<List id="emplist" items="{/menu}" noDataText="Aucun menu" showNoData="true" mode="Delete" delete="onMasterDelete">
+									<List id="emplist" items="{/MenuSet}" noDataText="Aucun menu" showNoData="true" mode="Delete" delete="onMasterDelete">
 										<headerToolbar>
 											<Toolbar>
 												<content>
@@ -17,7 +17,7 @@
 											</Toolbar>
 										</headerToolbar>
 										<items>
-											<StandardListItem type="Navigation" title="{date}" description="{nom}" press="onObjectItemPress"></StandardListItem>
+											<StandardListItem type="Navigation" title="{DateMenu}" description="{Name}" press="onObjectItemPress"></StandardListItem>
 										</items>
 									</List>
 									<Button text="Ajouter un menu" width="100%" press="onMasterAddPress"></Button>
@@ -27,9 +27,9 @@
 						<detailPages>
 							<Page id="detailpageid" title="Liste des plats" titleLevel="Auto" showHeader="true" showSubHeader="true" enableScrolling="true">
 								<content>
-									<List id="projectlistid" items="{plats}" mode="Delete" delete="onDetailDelete">
+									<List id="projectlistid" items="{path : '/Plat'}" mode="Delete" delete="onDetailDelete">
 										<items>
-											<StandardListItem type="Navigation" title="{nom}" description="{description}"  press="onDetailObjectItemPress"></StandardListItem>
+											<StandardListItem type="Navigation" title="{Nom}" description="{Description}"  press="onDetailObjectItemPress"></StandardListItem>
 										</items>
 									</List>
 									<Button text="Ajouter un plat" width="100%" press="onDetailAddPress"></Button>

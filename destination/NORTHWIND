@@ -1,0 +1,11 @@
+Description=Northwind OData services
+Type=HTTP
+TrustAll=true
+Authentication=NoAuthentication
+Name=Northwind
+ProxyType=Internet
+URL=https://services.odata.org
+WebIDEUsage=odata_abap,odata_gen
+WebIDESystem=A4H
+WebIDEEnabled=true
+sap-client=100

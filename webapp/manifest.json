@@ -10,11 +10,28 @@
 		"title": "{{appTitle}}",
 		"description": "{{appDescription}}",
 		"sourceTemplate": {
-			"id": "ui5template.basicSAPUI5ApplicationProject",
-			"version": "1.40.12"
+			"id": "servicecatalog.connectivityComponent",
+			"version": "0.0.0"
+		},
+		"dataSources": {
+			"Northwind.svc": {
+				"uri": "/Northwind/V2/Northwind/Northwind.svc/",
+				"type": "OData",
+				"settings": {
+					"odataVersion": "2.0",
+					"localUri": "localService/metadata.xml"
+				}
+			},
+			"ZMENU_PO_FINAL_SRV": {
+				"uri": "/S4H/sap/opu/odata/sap/ZMENU_PO_FINAL_SRV/",
+				"type": "OData",
+				"settings": {
+					"odataVersion": "2.0",
+					"localUri": "localService/ZMENU_PO_FINAL_SRV/metadata.xml"
+				}
+			}
 		}
 	},
-
 	"sap.ui": {
 		"technology": "UI5",
 		"icons": {
@@ -30,13 +47,8 @@
 			"tablet": true,
 			"phone": true
 		},
-		"supportedThemes": [
-			"sap_hcb",
-			"sap_belize"
-
-		]
+		"supportedThemes": ["sap_hcb", "sap_belize"]
 	},
-
 	"sap.ui5": {
 		"rootView": {
 			"viewName": "GfiRestau.view.app",
@@ -65,28 +77,25 @@
 				"viewPath": "GfiRestau.view",
 				"targetAggregation": "pages"
 			},
-			"routes": [
-				{
-					"pattern": "",
-					"name": "view1",
-					"view": "view1",
-					"targetAggregation": "pages",
-					"controlId": "app"
-				},
-				{
-					"pattern": "View2",
-					"name": "view2",
-					"view": "view2",
-					"targetAggregation": "pages",
-					"controlId": "app"
-				},
-				{
-					"pattern": "View3",
-					"name": "view3",
-					"view": "view3",
-					"targetAggregation": "pages",
-					"controlId": "app"
-				}]
+			"routes": [{
+				"pattern": "",
+				"name": "view1",
+				"view": "view1",
+				"targetAggregation": "pages",
+				"controlId": "app"
+			}, {
+				"pattern": "View2",
+				"name": "view2",
+				"view": "view2",
+				"targetAggregation": "pages",
+				"controlId": "app"
+			}, {
+				"pattern": "View3",
+				"name": "view3",
+				"view": "view3",
+				"targetAggregation": "pages",
+				"controlId": "app"
+			}]
 		},
 		"models": {
 			"i18n": {
@@ -94,6 +103,16 @@
 				"settings": {
 					"bundleName": "GfiRestau.i18n.i18n"
 				}
+			},
+			"MenuModel": {
+				"type": "sap.ui.model.odata.v2.ODataModel",
+				"settings": {
+					"defaultOperationMode": "Server",
+					"defaultBindingMode": "OneTime",
+					"defaultCountMode": "Request"
+				},
+				"dataSource": "ZMENU_PO_FINAL_SRV",
+				"preload": true
 			}
 		},
 		"resources": {
