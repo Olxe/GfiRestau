@@ -25,14 +25,20 @@
 							</Page>
 						</masterPages>
 						<detailPages>
-							<Page id="detailpageid" title="Liste des plats" titleLevel="Auto" showHeader="true" showSubHeader="true" enableScrolling="true">
+							<Page id="detailpageid" title="Plats" titleLevel="Auto" showHeader="true" showSubHeader="true" enableScrolling="true">
 								<content>
 									<List id="projectlistid" items="{path : '/Plat'}" mode="Delete" delete="onDetailDelete">
+										<headerToolbar>
+											<Toolbar>
+												<Text id="header" class="sapUiSmallMargin" text="Liste des plats" />
+													<ToolbarSpacer></ToolbarSpacer>
+												<Button text="Ajouter un plat" press="onDetailAddPress" />
+											</Toolbar>
+										</headerToolbar>
 										<items>
 											<StandardListItem type="Navigation" title="{Nom}" description="{Description}"  press="onDetailObjectItemPress"></StandardListItem>
 										</items>
 									</List>
-									<Button text="Ajouter un plat" width="100%" press="onDetailAddPress"></Button>
 								</content>
 							</Page>
 						</detailPages>

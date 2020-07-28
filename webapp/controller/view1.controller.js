@@ -5,8 +5,12 @@ sap.ui.define([
 	"sap/ui/model/json/JSONModel",
 	"sap/ui/model/Filter",
 	"sap/ui/model/FilterOperator",
-	"sap/m/MessageBox"
-], function(Controller, JSONModel, Filter, FilterOperator, MessageBox) {
+	"sap/m/MessageBox",
+	"sap/m/MessageToast",
+	"sap/m/Dialog",
+	"sap/m/Button",
+	"sap/m/Text"
+], function(Controller, JSONModel, Filter, FilterOperator, MessageBox, MessageToast, Dialog, Text) {
 	"use strict";
 
 	return Controller.extend("GfiRestau.controller.view1", {
@@ -71,42 +75,6 @@ sap.ui.define([
 			// var modelUser = sap.ui.getCore().getModel("MenuModel");
 			// console.log(modelUser);
 			
-			// var oModel = new sap.ui.model.odata.v2.ODataModel("/S4H/sap/opu/odata/sap/ZMENU_PO_FINAL_SRV/");
-			// sap.ui.getCore().setModel(oModel, "myModel");
-			// var readurl = "/MenuSet";
-			// console.log(oModel);
-			// oModel.read(readurl, {
-			// 	success : function(oData, oResponse) {
-			// 		console.log(oData);
- 
-			// 	}
-			// });
-			
-			 // access OData model declared in manifest.json file
-			 //var oModel = this.getOwnerComponent().getModel("MenuModel");
-			 //console.log(oModel);
-			 //set the model on view to be used by the UI controls
-			 //this.getView().setModel(oModel);
-			
-			// var oModel = new sap.ui.model.odata.v2.ODataModel("/sap/opu/odata/sap/ZMENU_PO_FINAL_SRV/");
-			// sap.ui.getCore().setModel(oModel, "myModel");
-			// var readurl = "/MenuSet";
-			// oModel.read(readurl, {
-			// 	success : function(oData, oResponse) {
-			// 		console.log(oData);
- 
-			// 	},
-			// 	error : function(err) {
-			// 		console.log(err);
-			// 	}
-			// });
-			
-			// this.getView().setModel(oModel);
-			
-			// this.getOwnerComponent().getModel("MenuSet");
-
-			// var oModel = this.getView().getModel("MenuSet");
-			// console.log(oModel);
 			
 			var sServiceURL 
 			     = "/S4H/sap/opu/odata/sap/ZMENU_PO_FINAL_SRV/";
@@ -121,26 +89,30 @@ sap.ui.define([
 			var oCtx = oItem.getBindingContext();
 			var path = oCtx.getPath();
 
-			
-    		// var that = this;
-			var readurl = "/PlatSet";
 			var oModel = sap.ui.getCore().getModel("MyModel");
-			var oJsonModel = new sap.ui.model.json.JSONModel();
 			var oTable = this.getView().byId("projectlistid");
-			
-			oModel.read(readurl, {
+								
+			oModel.read(path, {
 				success : function(oData) {
-					oJsonModel.setProperty("/Plat", oData.results);
-					
-                    oTable.setModel(oJsonModel);
-					
-					console.log(oJsonModel);
+					var readurl = "/PlatSet?$filter=IdMenu eq '" + oData.Id + "'";
+					var oJsonModel = new sap.ui.model.json.JSONModel();
+
+					oModel.read(readurl, {
+						success : function(oData2) {
+							oJsonModel.setProperty("/Plat", oData2.results);
+		                    oTable.setModel(oJsonModel);
+							console.log(oJsonModel);
+						},
+						error : function(err) {
+							console.log(err);
+						}
+					});
 				},
 				error : function(err) {
 					console.log(err);
 				}
 			});
-			// this.getView().byId("projectlistid").bindElement(oJsonModel);
+
 			// this.getView().byId("projectlistid").bindElement(path);		
 		},
 		
@@ -155,6 +127,48 @@ sap.ui.define([
 		
 		onMasterAddPress: function(oEvent) {
 			sap.ui.core.UIComponent.getRouterFor(this).navTo("view2");
+		},
+		
+		onMasterDelete: function(oEvent) {
+			var oItem = oEvent.getParameter("listItem"),
+				sPath = oItem.getBindingContext().getPath();
+			
+			var myModel = sap.ui.getCore().getModel("MyModel");
+			myModel.setHeaders({
+				"X-Requested-With" : "X"
+			});
+			
+			var oDialog = new Dialog({
+				title: "Confirmation",
+				type: "Message",
+				content: new Text({ text: "Etes vous sûr de vouloir suppremier ce menu ?" }),
+				beginButton: new sap.m.Button({
+					type: sap.m.ButtonType.Emphasized,
+					text: "Valider",
+					press: function () {
+						myModel.remove(sPath, {
+							success : function(oData, oResponse) {
+								MessageToast.show("Menu supprimé");
+							},
+							error : function(err, oResponse) {
+								MessageToast.show("Erreur lors de la suppression: " + err.response.statusText);
+							}
+						});
+						oDialog.close();
+					}
+				}),
+				endButton: new sap.m.Button({
+					text: "Annuler",
+					press: function () {
+						oDialog.close();
+					}
+				}),
+				afterClose: function () {
+					oDialog.destroy();
+				}
+			});
+
+			oDialog.open();
 		},
 		
 		onDatePickerChange: function(oEvent) {

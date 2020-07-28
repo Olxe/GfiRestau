@@ -1,9 +1,111 @@
-<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" controllerName="GfiRestau.controller.view2"
+<mvc:View xmlns:f="sap.ui.layout.form" xmlns:l="sap.ui.layout" xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" controllerName="GfiRestau.controller.view2"
 	xmlns:html="http://www.w3.org/1999/xhtml">
 	<App>
 		<pages>
-			<Page title="View 2" showNavButton="true" navButtonPress="onNavBack">
-				<content></content>
+			<Page title="Menu" showNavButton="true" navButtonPress="onNavBack">
+				<content>
+					<f:SimpleForm id="idSimpleForm"
+					editable="true"
+					layout="ResponsiveGridLayout"
+					title="Ajouter un menu">
+						<Label text="Nom"></Label>
+						<Input
+								id="InputNom"
+								class="sapUiSmallMarginBottom"
+								type="Text"
+								placeholder="Description du menu..."
+								enabled="true"
+								editable="true"
+							/>
+						<Label text="Description"></Label>
+						<Label text="Description" labelFor="InputDescription"/>
+							<Input
+								id="InputDescription"
+								class="sapUiSmallMarginBottom"
+								type="Text"
+								placeholder="Description du menu..."
+								enabled="true"
+								editable="true"
+							/>
+						<Label text="Date"></Label>
+						<DatePicker
+								id="DP4"
+								value="{path:'/dateValue', type:'sap.ui.model.type.Date', formatOptions: { style: 'short', strictParsing: true}}"
+								class="sapUiSmallMarginBottom"/>
+						<Button type="Accept"
+								text="Accept"
+								press="onAcceptPress">
+							<layoutData>
+								<FlexItemData growFactor="1" />
+							</layoutData>
+						</Button>
+						<Button type="Reject"
+								text="Reject"
+								press="onRejectPress">
+							<layoutData>
+								<FlexItemData growFactor="1" />
+							</layoutData>
+						</Button>
+					</f:SimpleForm>
+					
+					
+					
+					
+				<!--		<l:VerticalLayout-->
+				<!--		class="sapUiContentPadding"-->
+				<!--		width="80%">-->
+				<!--		<l:content>-->
+							<!--<Label text="Nom" labelFor="InputNoEdit"/>-->
+							<!--<Input-->
+							<!--	id="InputNoEdit"-->
+							<!--	class="sapUiSmallMarginBottom"-->
+							<!--	type="Text"-->
+							<!--	placeholder="Product..."-->
+							<!--	enabled="true"-->
+							<!--	editable="false"-->
+							<!--/>-->
+				<!--			<Label text="Nom" labelFor="InputNom"/>-->
+				<!--			<Input-->
+				<!--				id="InputNom"-->
+				<!--				class="sapUiSmallMarginBottom"-->
+				<!--				type="Text"-->
+				<!--				placeholder="Description du menu..."-->
+				<!--				enabled="true"-->
+				<!--				editable="true"-->
+				<!--			/>-->
+				<!--			<Label text="Description" labelFor="InputDescription"/>-->
+				<!--			<Input-->
+				<!--				id="InputDescription"-->
+				<!--				class="sapUiSmallMarginBottom"-->
+				<!--				type="Text"-->
+				<!--				placeholder="Description du menu..."-->
+				<!--				enabled="true"-->
+				<!--				editable="true"-->
+				<!--			/>-->
+				<!--			<Label text="Date" labelFor="DP4"/>-->
+				<!--			<DatePicker-->
+				<!--				id="DP4"-->
+				<!--				value="{path:'/dateValue', type:'sap.ui.model.type.Date', formatOptions: { style: 'medium', strictParsing: true}}"-->
+				<!--				class="sapUiSmallMarginBottom"/>-->
+				<!--		</l:content>-->
+						
+				
+				<!--<Button type="Accept"-->
+				<!--		text="Accept"-->
+				<!--		press="onPress">-->
+				<!--	<layoutData>-->
+				<!--		<FlexItemData growFactor="1" />-->
+				<!--	</layoutData>-->
+				<!--</Button>-->
+				<!--<Button type="Reject"-->
+				<!--		text="Reject"-->
+				<!--		press="onPress">-->
+				<!--	<layoutData>-->
+				<!--		<FlexItemData growFactor="1" />-->
+				<!--	</layoutData>-->
+				<!--</Button>-->
+				<!--	</l:VerticalLayout>-->
+				</content>
 			</Page>
 		</pages>
 	</App>
