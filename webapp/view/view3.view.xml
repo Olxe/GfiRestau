@@ -1,9 +1,48 @@
-<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" controllerName="GfiRestau.controller.view3"
+<mvc:View xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" controllerName="GfiRestau.controller.view3"
 	xmlns:html="http://www.w3.org/1999/xhtml">
 	<App>
 		<pages>
-			<Page title="View 3">
-				<content></content>
+			<Page title="Plat" showNavButton="true" navButtonPress="onNavBack">
+				<content>
+					<f:SimpleForm id="idSimpleForm"
+					editable="true"
+					layout="ResponsiveGridLayout"
+					title="Ajouter un plat">
+						<Label text="Nom"></Label>
+						<Input
+								id="InputNom"
+								class="sapUiSmallMarginBottom"
+								type="Text"
+								placeholder="Nom du menu..."
+								enabled="true"
+								editable="true"
+							/>
+						<Label text="Description"></Label>
+						<Label text="Description" labelFor="InputDescription"/>
+							<Input
+								id="InputDescription"
+								class="sapUiSmallMarginBottom"
+								type="Text"
+								placeholder="Description du plat..."
+								enabled="true"
+								editable="true"
+							/>
+						<Button type="Accept"
+								text="Accept"
+								press="onAcceptPress">
+							<layoutData>
+								<FlexItemData growFactor="1" />
+							</layoutData>
+						</Button>
+						<Button type="Reject"
+								text="Reject"
+								press="onRejectPress">
+							<layoutData>
+								<FlexItemData growFactor="1" />
+							</layoutData>
+						</Button>
+					</f:SimpleForm>
+				</content>
 			</Page>
 		</pages>
 	</App>

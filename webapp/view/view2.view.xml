@@ -13,7 +13,7 @@
 								id="InputNom"
 								class="sapUiSmallMarginBottom"
 								type="Text"
-								placeholder="Description du menu..."
+								placeholder="Nom du menu..."
 								enabled="true"
 								editable="true"
 							/>
@@ -47,64 +47,6 @@
 							</layoutData>
 						</Button>
 					</f:SimpleForm>
-					
-					
-					
-					
-				<!--		<l:VerticalLayout-->
-				<!--		class="sapUiContentPadding"-->
-				<!--		width="80%">-->
-				<!--		<l:content>-->
-							<!--<Label text="Nom" labelFor="InputNoEdit"/>-->
-							<!--<Input-->
-							<!--	id="InputNoEdit"-->
-							<!--	class="sapUiSmallMarginBottom"-->
-							<!--	type="Text"-->
-							<!--	placeholder="Product..."-->
-							<!--	enabled="true"-->
-							<!--	editable="false"-->
-							<!--/>-->
-				<!--			<Label text="Nom" labelFor="InputNom"/>-->
-				<!--			<Input-->
-				<!--				id="InputNom"-->
-				<!--				class="sapUiSmallMarginBottom"-->
-				<!--				type="Text"-->
-				<!--				placeholder="Description du menu..."-->
-				<!--				enabled="true"-->
-				<!--				editable="true"-->
-				<!--			/>-->
-				<!--			<Label text="Description" labelFor="InputDescription"/>-->
-				<!--			<Input-->
-				<!--				id="InputDescription"-->
-				<!--				class="sapUiSmallMarginBottom"-->
-				<!--				type="Text"-->
-				<!--				placeholder="Description du menu..."-->
-				<!--				enabled="true"-->
-				<!--				editable="true"-->
-				<!--			/>-->
-				<!--			<Label text="Date" labelFor="DP4"/>-->
-				<!--			<DatePicker-->
-				<!--				id="DP4"-->
-				<!--				value="{path:'/dateValue', type:'sap.ui.model.type.Date', formatOptions: { style: 'medium', strictParsing: true}}"-->
-				<!--				class="sapUiSmallMarginBottom"/>-->
-				<!--		</l:content>-->
-						
-				
-				<!--<Button type="Accept"-->
-				<!--		text="Accept"-->
-				<!--		press="onPress">-->
-				<!--	<layoutData>-->
-				<!--		<FlexItemData growFactor="1" />-->
-				<!--	</layoutData>-->
-				<!--</Button>-->
-				<!--<Button type="Reject"-->
-				<!--		text="Reject"-->
-				<!--		press="onPress">-->
-				<!--	<layoutData>-->
-				<!--		<FlexItemData growFactor="1" />-->
-				<!--	</layoutData>-->
-				<!--</Button>-->
-				<!--	</l:VerticalLayout>-->
 				</content>
 			</Page>
 		</pages>

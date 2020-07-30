@@ -1,45 +1,72 @@
+/*eslint-disable no-console, no-alert */
+
 sap.ui.define([
-	"sap/ui/core/mvc/Controller"
-], function(Controller) {
+	"sap/ui/core/mvc/Controller",
+	"sap/ui/core/routing/History",
+	"sap/m/MessageToast"
+], function(Controller, History, MessageToast) {
 	"use strict";
 
 	return Controller.extend("GfiRestau.controller.view3", {
-
-		/**
-		 * Called when a controller is instantiated and its View controls (if available) are already created.
-		 * Can be used to modify the View before it is displayed, to bind event handlers and do other one-time initialization.
-		 * @memberOf GfiRestau.view.view3
-		 */
-		//	onInit: function() {
-		//
-		//	},
-
-		/**
-		 * Similar to onAfterRendering, but this hook is invoked before the controller's View is re-rendered
-		 * (NOT before the first rendering! onInit() is used for that one!).
-		 * @memberOf GfiRestau.view.view3
-		 */
-		//	onBeforeRendering: function() {
-		//
-		//	},
-
-		/**
-		 * Called when the View has been rendered (so its HTML is part of the document). Post-rendering manipulations of the HTML could be done here.
-		 * This hook is the same one that SAPUI5 controls get after being rendered.
-		 * @memberOf GfiRestau.view.view3
-		 */
-		//	onAfterRendering: function() {
-		//
-		//	},
-
-		/**
-		 * Called when the Controller is destroyed. Use this one to free resources and finalize activities.
-		 * @memberOf GfiRestau.view.view3
-		 */
-		//	onExit: function() {
-		//
-		//	}
-
+		onInit: function() {
+			
+		},
+			onNavBack: function() {
+			var oHistory = History.getInstance();
+			var sPreviousHash = oHistory.getPreviousHash();
+			
+			if(sPreviousHash !== undefined) {
+				window.history.go(-1);
+			}
+			else {
+				var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+				oRouter.navTo("", true);
+			}
+		},
+		onAcceptPress: function () {
+			var oModelMenu = sap.ui.getCore().getModel("MenuSelection");
+			
+			var idMenu = oModelMenu.getProperty("/MenuSelection").Id;
+			var desc = this.getView().byId("InputDescription").getValue();
+			var name = this.getView().byId("InputNom").getValue();
+			
+			if(desc !== "" && name !== "") {
+				var myModel = sap.ui.getCore().getModel("MyModel");
+				myModel.setHeaders({
+					"X-Requested-With" : "X"
+				});
+				var that = this;
+				var obj = {};
+				obj.Description = this.getView().byId("InputDescription").getValue();
+				obj.Nom = this.getView().byId("InputNom").getValue();
+				obj.IdMenu = idMenu;
+				myModel.create("/PlatSet", obj, {
+					success : function(oData, oResponse) {
+						MessageToast.show("Ajout effectué");
+						that.getView().byId("InputDescription").setValue("");
+						that.getView().byId("InputNom").setValue("");
+					},
+					error : function(err, oResponse) {
+						MessageToast.show("Erreur lors de l'ajout: " + err.response.statusText);
+					}
+				});
+			}
+			else {
+				MessageToast.show("Vous devez remplir tout les champs");
+			}
+		}, 
+		onRejectPress: function () {
+			MessageToast.show("Ajout d'un plat annulé");
+			var oHistory = History.getInstance();
+			var sPreviousHash = oHistory.getPreviousHash();
+			
+			if(sPreviousHash !== undefined) {
+				window.history.go(-1);
+			}
+			else {
+				var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+				oRouter.navTo("", true);
+			}
+		}
 	});
-
 });

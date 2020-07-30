@@ -91,17 +91,16 @@ sap.ui.define([
 
 			var oModel = sap.ui.getCore().getModel("MyModel");
 			var oTable = this.getView().byId("projectlistid");
-								
+			var header = this.getView().byId("header");
 			oModel.read(path, {
 				success : function(oData) {
 					var readurl = "/PlatSet?$filter=IdMenu eq '" + oData.Id + "'";
 					var oJsonModel = new sap.ui.model.json.JSONModel();
-
+					header.setText("Liste des plats du: " + oData.DateMenu);
 					oModel.read(readurl, {
 						success : function(oData2) {
 							oJsonModel.setProperty("/Plat", oData2.results);
 		                    oTable.setModel(oJsonModel);
-							console.log(oJsonModel);
 						},
 						error : function(err) {
 							console.log(err);
@@ -113,6 +112,7 @@ sap.ui.define([
 				}
 			});
 
+			this.value = path;
 			// this.getView().byId("projectlistid").bindElement(path);		
 		},
 		
@@ -122,7 +122,25 @@ sap.ui.define([
 		},
 		
 		onDetailAddPress: function(oEvent) {
-			sap.ui.core.UIComponent.getRouterFor(this).navTo("view3");
+			var oModel = sap.ui.getCore().getModel("MyModel");
+			var router = sap.ui.core.UIComponent.getRouterFor(this);
+			var path = this.value;
+			if(path === undefined) {
+				MessageToast.show("Veuillez sélectionner un menu");
+			}
+			else {
+				oModel.read(path, {
+					success : function(oData) {
+						var oJsonModel = new sap.ui.model.json.JSONModel();
+						oJsonModel.setProperty("/MenuSelection", oData);
+						sap.ui.getCore().setModel(oJsonModel, "MenuSelection");
+						router.navTo("view3");
+					},
+					error : function(err) {
+						console.log(err);
+					}
+				});	
+			}
 		},
 		
 		onMasterAddPress: function(oEvent) {
@@ -132,7 +150,7 @@ sap.ui.define([
 		onMasterDelete: function(oEvent) {
 			var oItem = oEvent.getParameter("listItem"),
 				sPath = oItem.getBindingContext().getPath();
-			
+
 			var myModel = sap.ui.getCore().getModel("MyModel");
 			myModel.setHeaders({
 				"X-Requested-With" : "X"
@@ -141,7 +159,7 @@ sap.ui.define([
 			var oDialog = new Dialog({
 				title: "Confirmation",
 				type: "Message",
-				content: new Text({ text: "Etes vous sûr de vouloir suppremier ce menu ?" }),
+				content: new Text({ text: "Etes vous sûr de vouloir supprimer ce menu ?" }),
 				beginButton: new sap.m.Button({
 					type: sap.m.ButtonType.Emphasized,
 					text: "Valider",
@@ -171,17 +189,60 @@ sap.ui.define([
 			oDialog.open();
 		},
 		
+		onDetailDelete: function(oEvent) {
+			var oItem = oEvent.getParameter("listItem"),
+				sPath = oItem.getBindingContext().getPath();
+			
+			var myModel = sap.ui.getCore().getModel("MyModel");
+			myModel.setHeaders({
+				"X-Requested-With" : "X"
+			});
+			
+			var oDialog = new Dialog({
+				title: "Confirmation",
+				type: "Message",
+				content: new Text({ text: "Etes vous sûr de vouloir supprimer ce plat ?" }),
+				beginButton: new sap.m.Button({
+					type: sap.m.ButtonType.Emphasized,
+					text: "Valider",
+					press: function () {
+						myModel.remove("PlatSet('" + oItem.getBindingContext().getModel().getProperty("/Plat")[sPath.split("/")[2]].Id + "')", {
+							success : function(oData, oResponse) {
+								MessageToast.show("Plat supprimé");
+							},
+							error : function(err, oResponse) {
+								MessageToast.show("Erreur lors de la suppression: " + err.response.statusText);
+							}
+						});
+						oDialog.close();
+					}
+				}),
+				endButton: new sap.m.Button({
+					text: "Annuler",
+					press: function () {
+						oDialog.close();
+					}
+				}),
+				afterClose: function () {
+					oDialog.destroy();
+				}
+			});
+
+			oDialog.open();
+		},
+		
 		onDatePickerChange: function(oEvent) {
 			// create a blank filter array
 			var aFilter = [];
 			// get the string which was searched by the user
 			var sQuery = oEvent.getSource().getValue();
 			// create new filter object using the searched string
-			var oFilter = new sap.ui.model.Filter("date", FilterOperator.Contains, sQuery);
+			var oFilter = new sap.ui.model.Filter("DateMenu", FilterOperator.Contains, sQuery);
 			// push the newly created filter object in the blank filter array created above.
 			aFilter.push(oFilter);
 			// get the binding of items aggregation of the List
 			var oBinding = this.getView().byId("emplist").getBinding("items");
+						console.log(oBinding);
 			// apply filter on the obtained binding
 			oBinding.filter(aFilter);
 		}
